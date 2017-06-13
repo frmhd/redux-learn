@@ -1,8 +1,29 @@
-import { SET_YEAR } from './../constants/constants'
+import axios from 'axios'
 
-export function setYear (year) {
-  return {
-    type: SET_YEAR,
-    payload: year
+import {
+  GET_PHOTOS_REQUEST,
+  GET_PHOTOS_SUCCESS } from './../constants/constants'
+
+export function getPhotos (url) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_PHOTOS_REQUEST
+    })
+
+    return axios({
+      url: url,
+      timeout: 20000,
+      method: 'get',
+      responseType: 'json'
+    })
+    .then(function (response) {
+      dispatch({
+        type: GET_PHOTOS_SUCCESS,
+        payload: response.data
+      })
+    })
+    .catch(function (response) {
+      console.log(response.data)
+    })
   }
 }

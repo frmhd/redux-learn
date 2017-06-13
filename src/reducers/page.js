@@ -1,14 +1,20 @@
-import { SET_YEAR } from './../constants/constants'
+import {
+  GET_PHOTOS_REQUEST,
+  GET_PHOTOS_SUCCESS } from './../constants/constants'
 
 const initialState = {
   year: '2017',
-  photos: []
+  photos: [],
+  fetching: false
 }
 
 export default function photos (state = initialState, action) {
   switch (action.type) {
-    case SET_YEAR:
-      return { ...state, year: action.payload }
+    case GET_PHOTOS_REQUEST:
+      return { ...state, year: action.payload, fetching: true }
+
+    case GET_PHOTOS_SUCCESS:
+      return { ...state, photos: action.payload, fetching: false }
 
     default:
       return state
